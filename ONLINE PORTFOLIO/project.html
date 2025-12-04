@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projects</title>
+    <style>
+        /* Background of the whole page */
+        body {
+            background-color: #c0aa87d7;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Header bar */
+        #headline {
+            background-color: #6b634a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Center main headline */
+        #headline h1 {
+            flex-grow: 1;
+            color: #000000;
+            font-size: 50px;
+        }
+
+        /* Navigation options */
+        .options {
+            display: flex;
+            gap: 30px;
+            font-size: 2rem;
+        }
+
+        .options a {
+            margin: 0;
+            font-weight: bold;
+            cursor: pointer;
+            color: black;
+            text-decoration: none;
+        }
+
+        /* Main container */
+        .main-container {
+            position: relative;
+            height: calc(100vh - 100px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* posters */
+        .poster {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            gap: 30px;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .poster.active {
+            opacity: 1;
+        }
+
+        .text-container {
+            width: 700px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .poster.active .text-container {
+            transform: translateX(0);
+        }
+
+        .name {
+            font-size: 70px;
+            font-weight: bold;
+        }
+
+        .poster-text {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .pic {
+            transform: translateX(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .poster.active .pic {
+            transform: translateX(0);
+        }
+
+        .pic img {
+            width: 600px;
+            height: 600px;
+        }
+
+        /* Invisible left/right click areas */
+        #left-side, #right-side {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        #left-side { left: 0; }
+        #right-side { right: 0; }
+
+        /* Click hint */
+        #click-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: #000000;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 15px;
+            border-radius: 10px;
+            z-index: 20;
+            animation: fadeBlink 2s infinite;
+        }
+
+        @keyframes fadeBlink {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="headline">
+        <h1>Online Portfolio</h1>
+        <div class="options">
+            <a href="homepage.html" target="_self">HOME</a>
+            <a href="project.html" class="disabled" style="color: rgb(58, 58, 58)">PROJECTS</a>
+            <a href="about.html" target="_self">ABOUT</a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div id="left-side"></div>
+        <div id="right-side"></div>
+
+        <!-- Posters -->
+        <div class="poster active">
+            <div class="text-container">
+                <div class="name">NSTP Poster</div>
+                <div class="poster-text">
+                    Group 1
+                </div>
+            </div>
+            <div class="pic">
+                <img src="projects/NSTP Group 1.jpg" alt="NSTP Poster Group 1">
+            </div>
+        </div>
+
+        <div class="poster">
+            <div class="text-container">
+                <div class="name">NSTP Poster</div>
+                <div class="poster-text">
+                    Group 2
+                </div>
+            </div>
+            <div class="pic">
+                <img src="projects/NSTP Group 2.jpg" alt="NSTP Poster Group 2">
+            </div>
+        </div>
+
+        <div class="poster">
+            <div class="text-container">
+                <div class="name">NSTP Poster</div>
+                <div class="poster-text">
+                    Group 5
+                </div>
+            </div>
+            <div class="pic">
+                <img src="projects/NSTP Group 5.jpg" alt="NSTP Poster Group 5">
+            </div>
+        </div>
+
+        <div class="poster">
+            <div class="text-container">
+                <div class="name">Truth Cannot Be Silenced</div>
+                <div class="poster-text">
+                </div>
+            </div>
+            <div class="pic">
+                <img src="projects/truth cannot be silenced.png" alt="truth cannot be silenced">
+            </div>
+        </div>
+
+        <div class="poster">
+            <div class="text-container">
+                <div class="name">Waves of Resistance</div>
+                <div class="poster-text">
+                    Defending the West Philippine Sea
+                </div>
+            </div>
+            <div class="pic">
+                <img src="projects/Waves of Resisance.jpg" alt="Waves of Resistance">
+            </div>
+        </div>
+
+        <!-- CLICK TO VIEW MORE MESSAGE -->
+        <div id="click-hint">Click anywhere to view more</div>
+    </div>
+
+    <script>
+        let currentposter = 0;
+        const posters = document.querySelectorAll('.poster');
+        const totalposters = posters.length;
+
+        function showposter(index) {
+            posters.forEach((poster, i) => {
+                poster.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextposter() {
+            currentposter = (currentposter + 1) % totalposters;
+            showposter(currentposter);
+        }
+
+        function prevposter() {
+            currentposter = (currentposter - 1 + totalposters) % totalposters;
+            showposter(currentposter);
+        }
+
+        document.getElementById('left-side').addEventListener('click', prevposter);
+        document.getElementById('right-side').addEventListener('click', nextposter);
+
+        /* REMOVE HINT AFTER FIRST CLICK */
+        function removeHint() {
+            const hint = document.getElementById('click-hint');
+            if (hint) hint.style.display = "none";
+            document.removeEventListener('click', removeHint);
+        }
+
+        document.addEventListener('click', removeHint);
+    </script>
+</body>
+</html>
